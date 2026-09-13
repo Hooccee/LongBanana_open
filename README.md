@@ -3,10 +3,10 @@
 ## An Expert-Verified Benchmark for Long-Context Multi-Reference Image Synthesis
 
 <p align="center">
-  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="assets/badge-project-page.svg" alt="Project Page" height="28"></a>
-  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="assets/badge-gallery.svg" alt="Gallery" height="28"></a>
-  <a href="#paper"><img src="https://img.shields.io/badge/arXiv-Coming%20Soon-B31B1B?style=for-the-badge&amp;logo=arxiv&amp;logoColor=white" alt="arXiv Paper — Coming soon"></a>
-  <a href="#dataset-and-task-format"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Coming%20Soon-FFD21E?style=for-the-badge" alt="Hugging Face Dataset — Coming soon"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="assets/badge-project-page.svg" alt="Project Page" height="42"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="assets/badge-gallery.svg" alt="Gallery" height="42"></a>
+  <a href="#paper"><img src="assets/badge-arxiv.svg" alt="arXiv Paper — Coming soon" height="42"></a>
+  <a href="#dataset-and-task-format"><img src="assets/badge-dataset.svg" alt="Hugging Face Dataset — Coming soon" height="42"></a>
 </p>
 
 **90 tasks · 9 categories · approximately 32 references per task · 4,670 atomic evaluation items**

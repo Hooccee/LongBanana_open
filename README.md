@@ -2,6 +2,11 @@
 
 ## An Expert-Verified Benchmark for Long-Context Multi-Reference Image Synthesis
 
+[Project Page](https://hooccee.github.io/LongBanana-v2/) ·
+[Gallery](https://hooccee.github.io/LongBanana-v2/gallery/) ·
+[arXiv Paper — Coming soon](#paper) ·
+[Hugging Face Dataset — Coming soon](#dataset-and-task-format)
+
 **90 tasks · 9 categories · approximately 32 references per task · 4,670 atomic evaluation items**
 
 LongBanana evaluates whether image-generation systems can retrieve dispersed visual
@@ -109,8 +114,12 @@ for detailed task fields and commands.
 
 ## Dataset and Task Format
 
-Dataset assets and human annotations are distributed separately; a public download
-link has not yet been added here. To use a local benchmark release:
+**Hugging Face Dataset: Coming soon.** The dataset download link will be added
+here when available. Dataset assets and human annotations are distributed
+separately from the code. Explore examples in the
+[Gallery](https://hooccee.github.io/LongBanana-v2/gallery/).
+
+To use a local benchmark release:
 
 ```bash
 openclaw-longbanana-build-release-tasks --release-root /path/to/benchmark_release
@@ -169,6 +178,12 @@ Run offline tests with `pytest -q`. Live runs require API access and dataset ass
 This implementation builds on [OpenClaw](https://github.com/openclaw/openclaw)
 and the Model Context Protocol ecosystem. The bundled OpenClaw runtime retains
 its [MIT license](openclaw-runtime/LICENSE).
+
+## Paper
+
+**arXiv Paper: Coming soon.** The paper link and arXiv identifier will be added
+here when available. Visit the
+[Project Page](https://hooccee.github.io/LongBanana-v2/) for the benchmark overview.
 
 ## Citation
 

@@ -20,6 +20,12 @@ This repository provides the OpenClaw implementation of **LongBanana-Gen** and
 **LongBanana-Eval**: image-generation tools, a static agentic checklist judge,
 optional visual subagents, and benchmark task conversion utilities.
 
+[![LongBanana task and evaluation overview](assets/longbanana-overview.webp)](assets/longbanana-overview.pdf)
+
+*Figure 1. LongBanana task and evaluation overview: multi-reference synthesis
+inputs, candidate outputs, and graph-grounded checklist evaluation. Click the
+figure for the original PDF.*
+
 ![LongBanana task taxonomy](assets/taxonomy.jpg)
 
 ## Benchmark
@@ -53,6 +59,12 @@ combines ReAct, Plan–Exec, and Reflect for evidence retrieval, decomposition, 
 iterative repair. Included MCP servers support Gemini, Azure GPT Image, and
 Seedream-compatible backends. The paper also studies direct baselines,
 Hermes-Agent, and OpenCode; this release contains the OpenClaw implementation.
+
+[![LongBanana-Gen RPR architecture](assets/longbanana-gen.webp)](assets/longbanana-gen.pdf)
+
+*Figure 18. LongBanana-Gen agent-orchestrator workflow: ReAct retrieves reference
+evidence, Plan–Exec decomposes synthesis into subgoals, and Reflect checks drafts
+against checklist obligations before repair. Click the figure for the original PDF.*
 
 **LongBanana-Eval** judges individual checklist obligations against a candidate
 image and relevant references. Optional OCR, detection/counting, layout, and

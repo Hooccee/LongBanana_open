@@ -1,4 +1,4 @@
-# LongBanana
+# <img src="assets/project-icon-small.png" alt="LongBanana mascot" width="72" height="36"> LongBanana
 
 ## An Expert-Verified Benchmark for Long-Context Multi-Reference Image Synthesis
 

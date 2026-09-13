@@ -1,0 +1,29 @@
+{
+  "name": "image-gen-mcp",
+  "version": "3.0.0",
+  "description": "Three independent MCP servers (gemini / azure / seedream), one per image-gen backend.",
+  "type": "module",
+  "bin": {
+    "image-gen-mcp-gemini": "./dist/server-gemini.js",
+    "image-gen-mcp-azure": "./dist/server-azure.js",
+    "image-gen-mcp-seedream": "./dist/server-seedream.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start:gemini": "node dist/server-gemini.js",
+    "start:azure": "node dist/server-azure.js",
+    "start:seedream": "node dist/server-seedream.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "https-proxy-agent": "^9.0.0",
+    "sharp": "^0.34.5",
+    "undici": "^8.1.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0"
+  }
+}

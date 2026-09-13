@@ -1,0 +1,14 @@
+prune data
+prune runs
+prune state
+prune workspace
+prune .openclaw
+prune detector-judge/.openclaw
+prune image-gen-mcp/node_modules
+prune openclaw-runtime/node_modules
+prune openclaw-runtime/dist/extensions/*/node_modules
+prune openclaw-runtime/dist/extensions/*/node_modules/.cache
+
+exclude .env
+exclude openclaw-runtime/package-lock.json
+global-exclude __pycache__ *.py[cod] .pytest_cache *.log

@@ -1,0 +1,27 @@
+{
+  "default_backend": "gemini",
+  "backends": {
+    "gemini": {
+      "accounts": [
+        {
+          "project": "your-gcp-project",
+          "location": "global",
+          "credentials": "/absolute/path/to/service-account.json",
+          "model": "gemini-planning-model",
+          "image_model": "gemini-image-model"
+        }
+      ]
+    },
+    "azure": {
+      "endpoint": "https://your-resource.openai.azure.com",
+      "api_key": "replace-me",
+      "deployment": "gpt-image-1",
+      "api_version": "2025-04-01-preview"
+    },
+    "seedream": {
+      "base_url": "https://ark.example.com/api/v3",
+      "api_key": "replace-me",
+      "model": "seedream-4-0"
+    }
+  }
+}

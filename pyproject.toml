@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openclaw-longbanana"
+version = "0.1.0"
+description = "OpenClaw-based LongBanana image generation and subagent judge harness."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["google-auth[requests]>=2"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+openclaw-longbanana-generate = "openclaw_longbanana.generation.run:main"
+openclaw-longbanana-judge = "openclaw_longbanana.judge.run_agent_judge_static:main"
+openclaw-longbanana-build-release-tasks = "openclaw_longbanana.release.build_tasks:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

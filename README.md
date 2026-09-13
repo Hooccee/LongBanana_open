@@ -3,8 +3,8 @@
 ## An Expert-Verified Benchmark for Long-Context Multi-Reference Image Synthesis
 
 <p align="center">
-  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="https://img.shields.io/badge/Project-Page-2563EB?style=for-the-badge" alt="Project Page"></a>
-  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="https://img.shields.io/badge/Gallery-Explore-7C3AED?style=for-the-badge" alt="Gallery"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="assets/badge-project-page.svg" alt="Project Page" height="28"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="assets/badge-gallery.svg" alt="Gallery" height="28"></a>
   <a href="#paper"><img src="https://img.shields.io/badge/arXiv-Coming%20Soon-B31B1B?style=for-the-badge&amp;logo=arxiv&amp;logoColor=white" alt="arXiv Paper — Coming soon"></a>
   <a href="#dataset-and-task-format"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Coming%20Soon-FFD21E?style=for-the-badge" alt="Hugging Face Dataset — Coming soon"></a>
 </p>

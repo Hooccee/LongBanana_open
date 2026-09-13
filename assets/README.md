@@ -6,7 +6,9 @@
 - Hugging Face: official full-color `hf-logo.png` from
   [Hugging Face Brand Assets](https://huggingface.co/brand).
   [Original download](https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.png).
-- LongBanana: project-provided banana-dog artwork.
+- LongBanana: project-provided banana-dog and gallery artwork. The Project Page
+  and Gallery badges embed small PNG derivatives at approximately 3x their
+  display resolution, preserving the originals' aspect ratios.
 
 Retrieved September 14, 2026. Official artwork is embedded without recoloring
 and displayed with its original aspect ratio. Button backgrounds follow the

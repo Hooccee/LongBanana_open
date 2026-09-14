@@ -386,6 +386,11 @@ def test_openclaw_env_uses_vertex_subagent_shape_and_16k_tokens(monkeypatch, tmp
         cfg = json.loads(Path(env["OPENCLAW_CONFIG_PATH"]).read_text())
         config_media = (Path(env["OPENCLAW_CONFIG_PATH"]).parent / "media").resolve()
         workspace = Path(cfg["agents"]["defaults"]["workspace"])
+        for specialist in cfg["agents"]["list"][1:]:
+            assert specialist["skills"] == []
+            instructions = (Path(specialist["workspace"]) / "AGENTS.md").read_text()
+            assert "no file-reading tool call is needed" in instructions
+            assert "Return one JSON object" in instructions
     finally:
         import shutil
 

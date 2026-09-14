@@ -157,6 +157,21 @@ source-provenance fields.
 
 ## Judge
 
+With `--openclaw-judge-subagents`, non-global checks require completed visual
+subagent evidence before accepting a verdict. The runner keeps the per-task
+Gateway alive, checks the isolated run registry for successful completion and
+nonempty child results, then requests a fresh parent verdict using that evidence.
+Early parent answers and answers found only in Gateway logs are not accepted.
+Child failure, missing evidence, or timeout produces an invalid result eligible
+for the configured retry policy. Completion snapshots are saved alongside task
+logs as `*.subagents.json`. Global checks and runs without this flag keep their
+existing direct-judge behavior.
+
+Visual specialists receive their role instructions inline in isolated bootstrap
+workspaces. They do not need to call an unavailable `read` tool to load a skill.
+The parent CLI remains alive until child completion is persisted, even if it
+prints an early response; the response alone is not a completion signal.
+
 Dry-run one judge task:
 
 ```bash

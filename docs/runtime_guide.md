@@ -76,6 +76,28 @@ cp .env.example .env
 The Python entry points load `./.env` automatically. Parent-shell environment
 variables override values from `.env`.
 
+### Official API setup (default)
+
+Set `ANTHROPIC_API_KEY` for Claude planning and `GEMINI_API_KEY` for Gemini
+image generation and judging. The provided image backend example reads the key
+from the environment, not from a committed JSON secret.
+
+- Claude: `https://api.anthropic.com`, native `anthropic-messages` protocol.
+  See the [official Claude API documentation](https://platform.claude.com/docs/en/api/overview).
+- Gemini: `https://generativelanguage.googleapis.com/v1beta`, native Gemini
+  requests. See the [official Gemini API documentation](https://ai.google.dev/api).
+- `OPENCLAW_MODEL_ID` selects the planning model; `AGENT_JUDGE_GEMINI_MODEL`
+  independently selects the judge. `image_model` in the image config selects
+  the image-generation model. Replace example IDs if unavailable to your account.
+
+### Optional Vertex AI
+
+Vertex AI remains supported explicitly: set `OPENCLAW_JUDGE_PROVIDER=google-vertex`,
+`GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`, and
+`GOOGLE_APPLICATION_CREDENTIALS`. For image generation, use an account with
+`provider: "google-vertex"`, `project`, `location`, `credentials`, and `image_model`.
+These are optional public Google Cloud credentials, not enterprise gateway settings.
+
 Do not commit private values such as:
 
 - model endpoint URLs;

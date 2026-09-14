@@ -10,9 +10,11 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 export declare function makeLogger(name: string): (...args: unknown[]) => void;
 export interface GeminiAccount {
-    project: string;
-    location: string;
-    credentials: string;
+    provider?: "google" | "google-vertex";
+    api_key_env?: string;
+    project?: string;
+    location?: string;
+    credentials?: string;
     model: string;
     image_model: string;
     max_concurrency?: number;

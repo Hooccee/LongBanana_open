@@ -52,9 +52,11 @@ export function makeLogger(name: string) {
 // ---------------------------------------------------------------------------
 
 export interface GeminiAccount {
-  project: string;
-  location: string;
-  credentials: string;
+  provider?: "google" | "google-vertex";
+  api_key_env?: string;
+  project?: string;
+  location?: string;
+  credentials?: string;
   model: string;
   image_model: string;
   max_concurrency?: number;

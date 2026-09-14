@@ -361,6 +361,8 @@ def test_generation_openclaw_config_matches_main_shape(monkeypatch, tmp_path: Pa
 
 
 def test_openclaw_env_uses_vertex_subagent_shape_and_16k_tokens(monkeypatch, tmp_path: Path):
+    monkeypatch.setenv("OPENCLAW_JUDGE_PROVIDER", "google-vertex")
+    monkeypatch.setenv("AGENT_JUDGE_GEMINI_MODEL", "gemini-test")
     monkeypatch.setenv("OPENCLAW_MODEL_PROVIDER", "test-provider")
     monkeypatch.setenv("OPENCLAW_MODEL_ID", "gemini-test")
     monkeypatch.setenv("GOOGLE_CLOUD_PROJECT", "project-test")
@@ -416,6 +418,8 @@ def test_openclaw_env_uses_vertex_subagent_shape_and_16k_tokens(monkeypatch, tmp
 
 
 def test_openclaw_env_defaults_gateway_call_timeout_without_private_env(monkeypatch, tmp_path: Path):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-key")
+    monkeypatch.setenv("OPENCLAW_JUDGE_PROVIDER", "google")
     monkeypatch.setenv("OPENCLAW_MODEL_PROVIDER", "test-provider")
     monkeypatch.setenv("OPENCLAW_MODEL_ID", "gemini-test")
     monkeypatch.setenv("GOOGLE_CLOUD_PROJECT", "project-test")

@@ -4,11 +4,10 @@
     "gemini": {
       "accounts": [
         {
-          "project": "your-gcp-project",
-          "location": "global",
-          "credentials": "/absolute/path/to/service-account.json",
-          "model": "gemini-planning-model",
-          "image_model": "gemini-image-model"
+          "provider": "google",
+          "api_key_env": "GEMINI_API_KEY",
+          "model": "gemini-3-flash-preview",
+          "image_model": "gemini-3.1-flash-image"
         }
       ]
     },

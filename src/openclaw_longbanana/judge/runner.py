@@ -133,7 +133,7 @@ def _gemini_account_configs() -> list[dict]:
     load_env_file()
     return [
         {
-            "model": os.environ.get("OPENCLAW_MODEL_ID", ""),
+            "model": GEMINI_MODEL,
             "project": os.environ.get("GOOGLE_CLOUD_PROJECT", ""),
             "location": os.environ.get("GOOGLE_CLOUD_LOCATION", ""),
             "credentials": os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", ""),
@@ -276,16 +276,25 @@ def _build_openclaw_env(
     media_root = _resolve_openclaw_media_root(media_paths)
     (config_path.parent / "media").symlink_to(media_root, target_is_directory=True)
     (state_dir / "media").symlink_to(media_root, target_is_directory=True)
-    vertex_token = _google_vertex_access_token(gemini_credentials)
-    vertex_provider_name = os.environ.get("OPENCLAW_JUDGE_PROVIDER", "google-vertex").strip() or "google-vertex"
+    vertex_provider_name = os.environ.get("OPENCLAW_JUDGE_PROVIDER", "google").strip() or "google"
+    if vertex_provider_name not in {"google", "google-vertex"}:
+        raise RuntimeError("OPENCLAW_JUDGE_PROVIDER must be google or google-vertex")
+    use_vertex = vertex_provider_name == "google-vertex"
+    if use_vertex:
+        vertex_token = _google_vertex_access_token(gemini_credentials)
+        judge_key = "<authenticated>"
+        judge_url = _build_vertex_generative_base_url(gemini_project, gemini_location)
+    else:
+        judge_key = env.get("GEMINI_API_KEY", "").strip() or env.get("GOOGLE_API_KEY", "").strip()
+        if not judge_key:
+            raise RuntimeError("GEMINI_API_KEY is required for the official Gemini API")
+        judge_url = "https://generativelanguage.googleapis.com/v1beta"
     vertex_provider = {
-        "baseUrl": _build_vertex_generative_base_url(gemini_project, gemini_location),
-        "apiKey": "<authenticated>",
+        "baseUrl": judge_url,
+        "apiKey": judge_key,
         "auth": "api-key",
         "api": "google-generative-ai",
-        "headers": {
-            "Authorization": f"Bearer {vertex_token}",
-        },
+        "headers": {"Authorization": f"Bearer {vertex_token}"} if use_vertex else {},
         "models": [
             {
                 "id": gemini_model,
@@ -416,8 +425,9 @@ def _build_openclaw_env(
     env["OPENCLAW_CONFIG_PATH"] = str(config_path)
     env["HOME"] = str(home)
     env["OPENCLAW_LOG_LEVEL"] = "debug"
-    for key in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
-        env.pop(key, None)
+    if use_vertex:
+        for key in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
+            env.pop(key, None)
     return env, root
 
 

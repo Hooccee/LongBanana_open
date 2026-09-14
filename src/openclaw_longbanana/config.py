@@ -127,10 +127,13 @@ class OpenClawModelConfig:
 
 def load_openclaw_model_config(*, max_tokens: int | None = None) -> OpenClawModelConfig:
     load_env_file()
-    provider = os.environ.get("OPENCLAW_MODEL_PROVIDER", "openai-compatible").strip()
-    model = require_env("OPENCLAW_MODEL_ID")
-    base_url = require_env("OPENCLAW_MODEL_BASE_URL")
-    api_key_env = os.environ.get("OPENCLAW_MODEL_API_KEY_ENV", "OPENCLAW_MODEL_API_KEY").strip()
+    provider = os.environ.get("OPENCLAW_MODEL_PROVIDER", "anthropic").strip()
+    official_claude = provider == "anthropic"
+    model = os.environ.get("OPENCLAW_MODEL_ID", "claude-sonnet-4-6" if official_claude else "").strip()
+    base_url = os.environ.get("OPENCLAW_MODEL_BASE_URL", "https://api.anthropic.com" if official_claude else "").strip()
+    if not model or not base_url:
+        raise RuntimeError("OPENCLAW_MODEL_ID and OPENCLAW_MODEL_BASE_URL are required")
+    api_key_env = os.environ.get("OPENCLAW_MODEL_API_KEY_ENV", "ANTHROPIC_API_KEY" if official_claude else "OPENCLAW_MODEL_API_KEY").strip()
     if not os.environ.get(api_key_env, "").strip():
         raise RuntimeError(f"{api_key_env} is required for OPENCLAW_MODEL_PROVIDER={provider}")
     headers: dict[str, str] | None = None
@@ -150,7 +153,7 @@ def load_openclaw_model_config(*, max_tokens: int | None = None) -> OpenClawMode
         model=model,
         base_url=base_url,
         api_key_env=api_key_env,
-        api=os.environ.get("OPENCLAW_MODEL_API", "openai-completions").strip(),
+        api=os.environ.get("OPENCLAW_MODEL_API", "anthropic-messages" if official_claude else "openai-completions").strip(),
         context_window=int(os.environ.get("OPENCLAW_MODEL_CONTEXT_WINDOW", "200000")),
         max_tokens=max_tokens if max_tokens is not None else int(os.environ.get("OPENCLAW_MAX_TOKENS", "16384")),
         allow_private_network=env_bool("OPENCLAW_MODEL_ALLOW_PRIVATE_NETWORK", False),

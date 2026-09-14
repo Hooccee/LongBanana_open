@@ -1,5 +1,5 @@
 /**
- * Gemini backend — Vertex AI REST + service-account JWT auth.
+ * Gemini backend — official API-key REST; optional Vertex service-account auth.
  * Isolated from Azure/Seedream code: not even importable from those modules.
  */
 import { readFile } from "node:fs/promises";
@@ -78,18 +78,34 @@ export async function generateWithGemini(params) {
         const idx = (_accountIndex + i) % n;
         const acct = accounts[idx];
         try {
-            const token = await getAccessToken(acct.credentials);
-            const url = `https://aiplatform.googleapis.com/v1/projects/${acct.project}/locations/${acct.location}/publishers/google/models/${acct.image_model}:generateContent`;
+            const useVertex = acct.provider === "google-vertex" || (!acct.provider && !!acct.credentials);
+            let url;
+            const headers = { "Content-Type": "application/json" };
+            if (useVertex) {
+                if (!acct.credentials || !acct.project || !acct.location)
+                    throw new Error("Vertex requires credentials, project and location");
+                headers.Authorization = `Bearer ${await getAccessToken(acct.credentials)}`;
+                const host = acct.location === "global" ? "aiplatform.googleapis.com" : `${acct.location}-aiplatform.googleapis.com`;
+                url = `https://${host}/v1/projects/${acct.project}/locations/${acct.location}/publishers/google/models/${acct.image_model}:generateContent`;
+            }
+            else {
+                const keyName = acct.api_key_env || "GEMINI_API_KEY";
+                const key = process.env[keyName];
+                if (!key)
+                    throw new Error(`${keyName} is required for the official Gemini API`);
+                headers["x-goog-api-key"] = key;
+                url = `https://generativelanguage.googleapis.com/v1beta/models/${acct.image_model}:generateContent`;
+            }
             const parts = [{ text: params.prompt }];
             for (const r of params.refs) {
                 const { data, mime } = await loadRefAsB64(r);
                 parts.push({ inlineData: { mimeType: mime, data } });
             }
-            const body = { contents: [{ role: "user", parts }] };
-            log(`request (account=${acct.project})`, acct.image_model);
+            const body = { contents: [{ role: "user", parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } };
+            log(`request (account=${idx}, provider=${useVertex ? "google-vertex" : "google"})`, acct.image_model);
             const res = await fetch(url, {
                 method: "POST",
-                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+                headers,
                 body: JSON.stringify(body),
             });
             const rawText = await res.text();

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * MCP server dedicated to the Gemini (Vertex AI) image-gen backend.
+ * MCP server dedicated to Gemini image generation (official API or Vertex AI).
  * Only imports _gemini + _common — physically cannot route to Azure or Seedream.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -21,7 +21,7 @@ const server = new McpServer({ name: "image-gen-mcp-gemini", version: "3.0.0" })
 
 server.tool(
   "generate_image",
-  "Generate an image via Gemini (Vertex AI). Provide reference_images as absolute paths; they are inlined as parts in the multimodal request.",
+  "Generate an image via Gemini. Provide reference_images as absolute paths; they are inlined as parts in the multimodal request.",
   {
     prompt: z.string().describe("Text description / edit instruction."),
     reference_images: z.array(z.string()).default([]).describe(
@@ -39,7 +39,7 @@ server.tool(
         refs: params.reference_images,
       });
       const saved = await saveImages(images, outDir);
-      return renderGenerateResponse(images, saved, "gemini (Vertex AI)");
+      return renderGenerateResponse(images, saved, "gemini");
     } catch (err) {
       return errorResponse(err);
     }

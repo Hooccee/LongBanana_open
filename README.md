@@ -111,9 +111,12 @@ node openclaw-runtime/openclaw.mjs --help
 ```
 
 Copy `.env.example` to `.env` and configure your planning model, judge model, and
-image backend. The bundled judge uses Gemini through Google Vertex AI; set
-`GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_CLOUD_PROJECT`, and
-`AGENT_JUDGE_GEMINI_MODEL`. See
+image backend. The defaults use the official **Claude API** for planning and
+the official **Gemini API** for image generation and judging. Set
+`ANTHROPIC_API_KEY` ([Claude Console](https://platform.claude.com/)) and
+`GEMINI_API_KEY` ([Google AI Studio](https://aistudio.google.com/apikey)).
+No enterprise gateway or service-account JSON is required. Model IDs are
+configurable; use models available to your API account. See
 [`examples/image_gen_config.example.json`](examples/image_gen_config.example.json)
 for image-backend configuration and [the runtime guide](docs/runtime_guide.md)
 for detailed task fields and commands.

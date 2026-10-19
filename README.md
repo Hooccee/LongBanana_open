@@ -66,12 +66,12 @@ not an agent's retrieval decision. An agent may decide which supplied references
 to open. OpenClaw optionally delegates evidence gathering to OCR,
 detection/counting, layout, and identity specialists.
 
-| Execution mode | Generation | Checklist evaluation |
-| --- | --- | --- |
-| Codex | Native tools + Gemini MCP | Native image viewing |
-| Claude Code | Native tools + Gemini MCP | Native image viewing |
-| OpenClaw | RPR + Gemini MCP | Static Judge, with optional visual specialists |
-| Direct Gemini VLM | — | No agent or Gateway |
+| Supported execution mode |
+| --- |
+| Direct VLM (Gemini) |
+| OpenClaw |
+| Codex |
+| Claude Code |
 
 Agent tasks run in Linux Bubblewrap sandboxes with read-only inputs and isolated
 workspaces. Generation agents cannot access evaluation checklists, simulated

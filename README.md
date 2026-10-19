@@ -6,7 +6,7 @@
   <a href="https://hooccee.github.io/LongBanana-v2/"><img src="assets/badge-project-page.svg" alt="Project Page" height="42"></a>
   <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="assets/badge-gallery.svg" alt="Gallery" height="42"></a>
   <a href="#paper-and-citation"><img src="assets/badge-arxiv.svg" alt="arXiv Paper — Coming soon" height="42"></a>
-  <a href="#datasets"><img src="assets/badge-dataset.svg" alt="Hugging Face Dataset — Coming soon" height="42"></a>
+  <a href="https://huggingface.co/datasets/hooccee/Longbanana"><img src="assets/badge-dataset.svg" alt="Hugging Face Dataset" height="42"></a>
 </p>
 
 **90 tasks per release · 9 categories · 32 reference images per task · graph-grounded evaluation**
@@ -98,8 +98,8 @@ for another dataset release or execution profile.
 
 ## Datasets
 
-**Hugging Face Dataset: Coming soon.** Dataset archives are distributed separately
-from code; the download link will be added here when published.
+Download the datasets from [Hugging Face](https://huggingface.co/datasets/hooccee/Longbanana).
+Dataset archives are distributed separately from code.
 
 | Release | Cases | References | Evaluation checks |
 | --- | ---: | ---: | ---: |

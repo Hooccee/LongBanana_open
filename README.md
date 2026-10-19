@@ -1,12 +1,12 @@
-# <img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/project-icon-small.png" alt="LongBanana mascot" width="72" height="36"> LongBanana
+# <img src="assets/project-icon-small.png" alt="LongBanana mascot" width="72" height="36"> LongBanana
 
 ## An Expert-Verified Benchmark for Long-Context Multi-Reference Image Synthesis
 
 <p align="center">
-  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-project-page.svg" alt="Project Page" height="42"></a>
-  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-gallery.svg" alt="Gallery" height="42"></a>
-  <a href="#paper-and-citation"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-arxiv.svg" alt="arXiv Paper — Coming soon" height="42"></a>
-  <a href="#datasets"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-dataset.svg" alt="Hugging Face Dataset — Coming soon" height="42"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="assets/badge-project-page.svg" alt="Project Page" height="42"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="assets/badge-gallery.svg" alt="Gallery" height="42"></a>
+  <a href="#paper-and-citation"><img src="assets/badge-arxiv.svg" alt="arXiv Paper — Coming soon" height="42"></a>
+  <a href="#datasets"><img src="assets/badge-dataset.svg" alt="Hugging Face Dataset — Coming soon" height="42"></a>
 </p>
 
 **90 tasks per release · 9 categories · 32 reference images per task · graph-grounded evaluation**
@@ -22,7 +22,7 @@ judging, and a direct Gemini VLM judging baseline. Planning and judging models
 are independently configurable using Gemini, GPT, or Claude. Image generation
 uses **Gemini 3.1 Flash Image**.
 
-![LongBanana task taxonomy](https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/taxonomy.jpg)
+![LongBanana task taxonomy](assets/taxonomy.jpg)
 
 ## Benchmark
 
@@ -47,7 +47,7 @@ The taxonomy describes each task's dominant demand. The three grading dimensions
 used across tasks are **Content Fidelity**, **Relational Binding**, and **Global
 Constraint Satisfaction**.
 
-[![LongBanana task and evaluation overview](https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-overview.webp)](https://github.com/Hooccee/LongBanana_open/blob/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-overview.pdf)
+[![LongBanana task and evaluation overview](assets/longbanana-overview.webp)](assets/longbanana-overview.pdf)
 
 ## Generation and Evaluation
 
@@ -58,7 +58,7 @@ viewing with a shared generation prompt and Gemini MCP interface. Backend guidan
 is available for optional reading. Agents decide how many generation or editing
 calls to make within the configured execution timeout.
 
-[![LongBanana-Gen RPR architecture](https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-gen.webp)](https://github.com/Hooccee/LongBanana_open/blob/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-gen.pdf)
+[![LongBanana-Gen RPR architecture](assets/longbanana-gen.webp)](assets/longbanana-gen.pdf)
 
 **LongBanana-Eval** judges individual checklist obligations against a generated
 candidate and the references bound to that check. Bindings come from the dataset,
@@ -213,7 +213,7 @@ LongBanana builds on the OpenClaw, Codex, Claude Code, Bubblewrap, and Model Con
 Protocol ecosystems. Code and accompanying documentation are licensed under
 [MIT](LICENSE). Retained third-party notices are in [NOTICE.router](NOTICE.router)
 and [NOTICE.openclaw](NOTICE.openclaw); separately installed runtimes retain their
-own licenses. [Artwork sources](https://github.com/Hooccee/LongBanana_open/blob/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/README.md)
+own licenses. [Artwork sources](assets/README.md)
 identify the project figures and third-party brand marks.
 
 The `open_v1` and `open_v1p5` datasets are licensed separately under

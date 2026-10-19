@@ -101,23 +101,15 @@ for another dataset release or execution profile.
 **Hugging Face Dataset: Coming soon.** Dataset archives are distributed separately
 from code; the download link will be added here when published.
 
-| Release | Cases | References | Additional public backgrounds | Evaluation checks |
-| --- | ---: | ---: | ---: | ---: |
-| `open_v1` | 90 | 2,880 | 90 | 4,670 |
-| `open_v1p5` | 90 | 2,880 | 0 | 5,170 |
+| Release | Cases | References | Evaluation checks |
+| --- | ---: | ---: | ---: |
+| `open_v1` | 90 | 2,880 | 4,670 |
+| `open_v1p5` | 90 | 2,880 | 5,170 |
 
-Both releases use the same portable format. `open_v1p5` provides graph-designed
-tasks and refined synthetic references. It is a distinct dataset, not a drop-in
-replacement for `open_v1`: matching case IDs across releases do not identify the
-same task. Select the release explicitly with `DATASET_MANIFEST`.
-
-Each archive contains public instructions, images, fixed check bindings,
-checksums, and licensing information. Simulated targets, previous scores, human
-judgments, and experiment traces are not included. Reference images can contain
-imperfections or ambiguous evidence; neither release guarantees perfect reference
-compliance or equal difficulty to the other. See the
-[dataset format](docs/dataset-format.md) and the
-[Gallery](https://hooccee.github.io/LongBanana-v2/gallery/).
+`open_v1p5` extends `open_v1` with 90 additional tasks featuring non-overlapping
+content. Both releases share the same data format, task taxonomy, and generation
+and evaluation workflows, allowing users to expand their experiments with the
+same pipeline. Select a release with `DATASET_MANIFEST`.
 
 ## Installation and Configuration
 

@@ -1,14 +1,11 @@
-prune data
-prune runs
-prune state
-prune workspace
-prune .openclaw
-prune detector-judge/.openclaw
-prune image-gen-mcp/node_modules
-prune openclaw-runtime/node_modules
-prune openclaw-runtime/dist/extensions/*/node_modules
-prune openclaw-runtime/dist/extensions/*/node_modules/.cache
-
-exclude .env
-exclude openclaw-runtime/package-lock.json
-global-exclude __pycache__ *.py[cod] .pytest_cache *.log
+include README.md LICENSE NOTICE.router NOTICE.openclaw
+recursive-include docs *.md
+recursive-include examples *.json
+recursive-include tests *.py
+recursive-include tools *.py
+recursive-include mcp *.json *.js
+recursive-include openclaw_skills SKILL.md
+recursive-include src *.py *.mjs *.md
+global-exclude *.pyc *.pyo
+prune build
+prune dist

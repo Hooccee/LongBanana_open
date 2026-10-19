@@ -1,26 +1,28 @@
-# <img src="assets/project-icon-small.png" alt="LongBanana mascot" width="72" height="36"> LongBanana
+# <img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/project-icon-small.png" alt="LongBanana mascot" width="72" height="36"> LongBanana
 
 ## An Expert-Verified Benchmark for Long-Context Multi-Reference Image Synthesis
 
 <p align="center">
-  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="assets/badge-project-page.svg" alt="Project Page" height="42"></a>
-  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="assets/badge-gallery.svg" alt="Gallery" height="42"></a>
-  <a href="#paper"><img src="assets/badge-arxiv.svg" alt="arXiv Paper — Coming soon" height="42"></a>
-  <a href="#dataset-and-task-format"><img src="assets/badge-dataset.svg" alt="Hugging Face Dataset — Coming soon" height="42"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-project-page.svg" alt="Project Page" height="42"></a>
+  <a href="https://hooccee.github.io/LongBanana-v2/gallery/"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-gallery.svg" alt="Gallery" height="42"></a>
+  <a href="#paper-and-citation"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-arxiv.svg" alt="arXiv Paper — Coming soon" height="42"></a>
+  <a href="#datasets"><img src="https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/badge-dataset.svg" alt="Hugging Face Dataset — Coming soon" height="42"></a>
 </p>
 
-**90 tasks · 9 categories · approximately 32 references per task · 4,670 atomic evaluation items**
+**90 tasks per release · 9 categories · 32 reference images per task · graph-grounded evaluation**
 
 LongBanana evaluates whether image-generation systems can retrieve dispersed visual
 evidence, reject distractors, bind entities and relations correctly, and compose
 one coherent final image from many references. It measures reference-grounded
 correctness beyond visual plausibility or a single holistic quality score.
 
-This repository provides the OpenClaw implementation of **LongBanana-Gen** and
-**LongBanana-Eval**: image-generation tools, a static agentic checklist judge,
-optional visual subagents, and benchmark task conversion utilities.
+This repository provides **LongBanana-Gen** and **LongBanana-Eval** with sandboxed
+**OpenClaw, Codex, and Claude Code** integrations, optional visual-specialist
+judging, and a direct Gemini VLM judging baseline. Planning and judging models
+are independently configurable using Gemini, GPT, or Claude. Image generation
+uses **Gemini 3.1 Flash Image**.
 
-![LongBanana task taxonomy](assets/taxonomy.jpg)
+![LongBanana task taxonomy](https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/taxonomy.jpg)
 
 ## Benchmark
 
@@ -29,7 +31,7 @@ with a graph-grounded checklist. The entity–relation graph connects required
 content, local bindings, relations, and scene-wide constraints to atomic,
 visually verifiable evaluation items.
 
-| Suite | Category | Capability | Tasks |
+| Suite | Category | Capability | Tasks per release |
 | --- | --- | --- | ---: |
 | Scene Composition | SCC | Semantic Coverage & Consistency | 10 |
 | Scene Composition | RGC | Relational Graph Consistency | 10 |
@@ -45,156 +47,183 @@ The taxonomy describes each task's dominant demand. The three grading dimensions
 used across tasks are **Content Fidelity**, **Relational Binding**, and **Global
 Constraint Satisfaction**.
 
-[![LongBanana task and evaluation overview](assets/longbanana-overview.webp)](assets/longbanana-overview.pdf)
+[![LongBanana task and evaluation overview](https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-overview.webp)](https://github.com/Hooccee/LongBanana_open/blob/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-overview.pdf)
 
 ## Generation and Evaluation
 
-**LongBanana-Gen** uses an agent harness to inspect references, plan generation
-steps, call an image backend, and revise intermediate outputs. Its **RPR** workflow
-combines ReAct, Plan–Exec, and Reflect for evidence retrieval, decomposition, and
-iterative repair. Included MCP servers support Gemini, Azure GPT Image, and
-Seedream-compatible backends. The paper also studies direct baselines,
-Hermes-Agent, and OpenCode; this release contains the OpenClaw implementation.
+**LongBanana-Gen** lets an agent inspect references, plan, call the image backend,
+and revise intermediate outputs. The OpenClaw **RPR** workflow combines ReAct,
+Plan–Exec, and Reflect. Codex and Claude Code use their native tools and image
+viewing with a shared generation prompt and Gemini MCP interface. Backend guidance
+is available for optional reading. Agents decide how many generation or editing
+calls to make within the configured execution timeout.
 
-[![LongBanana-Gen RPR architecture](assets/longbanana-gen.webp)](assets/longbanana-gen.pdf)
+[![LongBanana-Gen RPR architecture](https://raw.githubusercontent.com/Hooccee/LongBanana_open/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-gen.webp)](https://github.com/Hooccee/LongBanana_open/blob/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/longbanana-gen.pdf)
 
-**LongBanana-Eval** judges individual checklist obligations against a candidate
-image and relevant references. Optional OCR, detection/counting, layout, and
-identity subagents gather additional evidence. Labels use **Fail = 0**,
-**Uncertain = 1**, and **Pass = 2**. A case's checklist-average score is:
+**LongBanana-Eval** judges individual checklist obligations against a generated
+candidate and the references bound to that check. Bindings come from the dataset,
+not an agent's retrieval decision. An agent may decide which supplied references
+to open. OpenClaw optionally delegates evidence gathering to OCR,
+detection/counting, layout, and identity specialists.
+
+| Execution mode | Generation | Checklist evaluation |
+| --- | --- | --- |
+| Codex | Native tools + Gemini MCP | Native image viewing |
+| Claude Code | Native tools + Gemini MCP | Native image viewing |
+| OpenClaw | RPR + Gemini MCP | Static Judge, with optional visual specialists |
+| Direct Gemini VLM | — | No agent or Gateway |
+
+Agent tasks run in Linux Bubblewrap sandboxes with read-only inputs and isolated
+workspaces. Generation agents cannot access evaluation checklists, simulated
+targets, or prior scores. Upstream credentials remain in the supervisor. Networking
+is shared: Bubblewrap isolation is not a network-domain allowlist. See
+[architecture](docs/architecture.md) for execution and access boundaries.
+
+### Scoring
+
+Labels use **Fail = 0**, **Uncertain = 1**, and **Pass = 2**:
 
 ```text
 Case score = 100 × sum(item scores) / (2 × number of items)
+Category score = mean(case scores in the category)
+Overall score = mean(all case scores)
 ```
 
-The paper's subclass and overall averages pool the relevant checklist items.
-**P@70%** is a separate metric: the fraction of tasks reaching 70 under the paper's
-difficulty-weighted task scoring. Invalid responses are recorded separately from
-valid ternary judgments.
+These are unweighted case-mean scores. Invalid responses have no numeric score;
+incomplete runs report coverage and provisional scores. Report the dataset release,
+Judge configuration, and any missing-value policy alongside results. Difficulty-
+weighted scores require an identified weight file and evaluation cohort. Historical
+paper results use their stated aggregation and must not be relabelled as results
+for another dataset release or execution profile.
 
-## Results Reported in the Paper
+## Datasets
 
-The following results are transcribed from the accompanying manuscript; they are
-not recomputed by installing this repository.
+**Hugging Face Dataset: Coming soon.** Dataset archives are distributed separately
+from code; the download link will be added here when published.
 
-**Image backends with OpenClaw + RPR**
+| Release | Cases | References | Additional public backgrounds | Evaluation checks |
+| --- | ---: | ---: | ---: | ---: |
+| `open_v1` | 90 | 2,880 | 90 | 4,670 |
+| `open_v1p5` | 90 | 2,880 | 0 | 5,170 |
 
-| Image generator | Checklist average ↑ | P@70% ↑ |
-| --- | ---: | ---: |
-| Seedream 4 | 63.6 | 18.9 |
-| GPT Image 1 | 61.8 | 17.8 |
-| Nano Banana 2 | **78.4** | **47.8** |
+Both releases use the same portable format. `open_v1p5` provides graph-designed
+tasks and refined synthetic references. It is a distinct dataset, not a drop-in
+replacement for `open_v1`: matching case IDs across releases do not identify the
+same task. Select the release explicitly with `DATASET_MANIFEST`.
 
-**Judge–human agreement**
-
-| Judge | Pearson ↑ | Spearman ↑ | Kendall ↑ |
-| --- | ---: | ---: | ---: |
-| VLM-as-judge | 0.8413 | 0.8248 | 0.6437 |
-| LongBananaEval (agentic checklist judge) | **0.8707** | **0.8602** | **0.6727** |
-
-The manuscript reports 900 audited outputs across 90 cases and 10 generation
-conditions, with 46,700 reviewed checklist labels. Its independently double-labeled
-subset has 89.4% exact agreement and 0.83 quadratic weighted kappa.
-
-## Installation
-
-Use Python 3.11+ and Node.js 22.12+. Run commands from the repository root.
-
-```bash
-git clone https://github.com/Hooccee/LongBanana_open.git
-cd LongBanana_open
-python -m pip install -e '.[test]'
-npm install --prefix openclaw-runtime --omit=dev --ignore-scripts
-npm ci --prefix image-gen-mcp
-npm run build --prefix image-gen-mcp
-node openclaw-runtime/openclaw.mjs --help
-```
-
-Copy `.env.example` to `.env` and configure your planning model, judge model, and
-image backend. The defaults use the official **Claude API** for planning and
-the official **Gemini API** for image generation and judging. Set
-`ANTHROPIC_API_KEY` ([Claude Console](https://platform.claude.com/)) and
-`GEMINI_API_KEY` ([Google AI Studio](https://aistudio.google.com/apikey)).
-No enterprise gateway or service-account JSON is required. Model IDs are
-configurable; use models available to your API account. See
-[`examples/image_gen_config.example.json`](examples/image_gen_config.example.json)
-for image-backend configuration and [the runtime guide](docs/runtime_guide.md)
-for detailed task fields and commands.
-
-## Dataset and Task Format
-
-**Hugging Face Dataset: Coming soon.** The dataset download link will be added
-here when available. Dataset assets and human annotations are distributed
-separately from the code. Explore examples in the
+Each archive contains public instructions, images, fixed check bindings,
+checksums, and licensing information. Simulated targets, previous scores, human
+judgments, and experiment traces are not included. Reference images can contain
+imperfections or ambiguous evidence; neither release guarantees perfect reference
+compliance or equal difficulty to the other. See the
+[dataset format](docs/dataset-format.md) and the
 [Gallery](https://hooccee.github.io/LongBanana-v2/gallery/).
 
-To use a local benchmark release:
+## Installation and Configuration
+
+Use **Linux, Python 3.11+, Node.js, and Bubblewrap**, plus a supported agent runtime.
+Agent runtimes are provisioned separately; see the [runtime guide](docs/runtimes.md)
+for pinned versions and the OpenClaw build.
+
+Use `open-1018` for the sandboxed implementation and `legacy` for the earlier
+implementation. `open-1018` is the default branch; the original `main` is retained.
 
 ```bash
-openclaw-longbanana-build-release-tasks --release-root /path/to/benchmark_release
+git clone --branch open-1018 https://github.com/Hooccee/LongBanana_open.git
+cd LongBanana_open
+python -m pip install -e .
+npm ci --prefix mcp/image_gen
 ```
 
-This creates `openclaw/generation_tasks.jsonl`, `openclaw/judge_tasks_target.jsonl`,
-and `openclaw/task_manifest.json`. Generation tasks contain the prompt, references,
-and optional background. Judge tasks contain the candidate image, relevant
-references, question, guide, and answer options. Image paths may be relative to
-the task JSONL file.
+Existing Python and MCP dependencies may be reused instead of installed. No run
+automatically installs an agent runtime or changes the environment. Switching a
+code branch does not select or convert a dataset.
 
-`judge_tasks_target.jsonl` evaluates the release's target images. To evaluate your
-own generations, point each row's `candidate_path` to your saved output; see
-[`examples/judge_tasks.example.jsonl`](examples/judge_tasks.example.jsonl).
+Copy an example configuration and supply local paths through environment variables:
+
+```bash
+export DATASET_MANIFEST=/path/to/open_v1/manifest.json
+export RUNTIME_MANIFEST=/path/to/runtimes.json
+export BWRAP_PATH=/path/to/bwrap
+export MCP_MODULES="$PWD/mcp/image_gen/node_modules"
+```
+
+| Configuration | Default model interface | Credentials |
+| --- | --- | --- |
+| [Codex](examples/codex.json) | OpenAI Responses | `OPENAI_API_KEY`, `OPENAI_MODEL` |
+| [Claude Code](examples/claude-code.json) | Anthropic Messages | `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` |
+| [Gemini model fragment](examples/gemini-model.json) | Google Gemini, with explicit protocol conversion | `GEMINI_API_KEY`, `GEMINI_MODEL` |
+| [OpenClaw](examples/openclaw.json) | Configurable provider interface | See the example and runtime guide |
+| [Direct Gemini VLM](examples/direct-vlm.json) | Google Gemini | `GEMINI_API_KEY`, `GEMINI_MODEL` |
+
+Generation also requires `GEMINI_API_KEY` for `gemini-3.1-flash-image`. Examples
+target official provider endpoints; select model IDs available to your account.
+Keep credentials in environment variables and do not commit local configurations.
+See [running experiments](docs/running.md) for the runtime manifest, OpenClaw
+settings, concurrency, and timeout options.
 
 ## Generate Images
 
+Validate the dataset, then inspect a single case or run the full release:
+
 ```bash
-openclaw-longbanana-generate \
-  --tasks-jsonl /path/to/benchmark_release/openclaw/generation_tasks.jsonl \
-  --backends gemini --strategies pipe \
-  --results-dir runs/generation --workers 1
+python -m longbanana validate-data "$DATASET_MANIFEST" --evaluation
+python -m longbanana generate --config examples/codex.json --output runs/gen --case LAC-001 --dry-run
+python -m longbanana generate --config examples/codex.json --output runs/gen --resume
 ```
 
-Choose `gemini`, `azure`, or `seedream` for the configured backend. Add
-`--limit 1 --dry-run` to inspect a single task without making model calls.
+Use `examples/claude-code.json` or `examples/openclaw.json` for another agent.
+`--dry-run` checks inputs and runtime paths without API calls. Accepted outputs are
+listed in `runs/gen/candidates.json`. Resume reuses valid outputs only when input,
+configuration, code, runtime, and output fingerprints match.
 
 ## Evaluate Generated Images
 
+Generation and judging can use different model configurations. Evaluate the same
+candidate manifest with an agentic Judge and the direct baseline:
+
 ```bash
-openclaw-longbanana-judge \
-  --tasks-jsonl /path/to/judge_tasks.jsonl \
-  --judge-projects openclaw --openclaw-judge-subagents \
-  --invalid-retries 5 --results-dir runs/judge --workers 1
+python -m longbanana judge --config examples/codex.json --candidates runs/gen/candidates.json --output runs/judge --resume
+python -m longbanana judge-direct --config examples/direct-vlm.json --candidates runs/gen/candidates.json --output runs/direct --resume
 ```
 
-Omit `--openclaw-judge-subagents` to run the main judge without visual subagents.
-Outputs include `judgments.csv`, `summary.json`, and per-task logs. See CLI
-`--help` for resume, concurrency, and timeout options.
+Choose another agent configuration to change the Judge. OpenClaw's `subagents`
+setting enables or disables visual specialists. Outputs include `experiment.json`,
+per-task records in `results/`, attempts, and `summary.json`. Keep a separate output
+directory for each configuration. See [reproducibility](docs/reproducibility.md).
 
 ## Repository Structure
 
 ```text
-src/openclaw_longbanana/   Generation, judge, and task conversion
-image-gen-mcp/            Image-backend MCP servers
-openclaw-runtime/         Bundled OpenClaw runtime
-openclaw_skills/          Visual judge subagent instructions
-examples/                Task and configuration examples
+src/longbanana/           Unified CLI, sandbox, transports, generation and judging
+src/openclaw_longbanana/  Retained OpenClaw generation and Judge workflows
+mcp/image_gen/           Gemini image-generation MCP server
+openclaw_skills/         Visual Judge specialist instructions
+examples/                Official-provider configuration examples
+docs/                    Architecture, dataset format and execution guides
 tests/                   Offline tests
 ```
 
-Run offline tests with `pytest -q`. Live runs require API access and dataset assets.
+Run offline tests with `python -m unittest discover -s tests -v`.
+[Release packaging](docs/releasing.md) documents the source/data separation.
 
-## Acknowledgments
+## Acknowledgments and License
 
-This implementation builds on [OpenClaw](https://github.com/openclaw/openclaw)
-and the Model Context Protocol ecosystem. The bundled OpenClaw runtime retains
-its [MIT license](openclaw-runtime/LICENSE).
+LongBanana builds on the OpenClaw, Codex, Claude Code, Bubblewrap, and Model Context
+Protocol ecosystems. Code and accompanying documentation are licensed under
+[MIT](LICENSE). Retained third-party notices are in [NOTICE.router](NOTICE.router)
+and [NOTICE.openclaw](NOTICE.openclaw); separately installed runtimes retain their
+own licenses. [Artwork sources](https://github.com/Hooccee/LongBanana_open/blob/7f7da383d131f8ef3cc3ad43303d31a9f741fea5/assets/README.md)
+identify the project figures and third-party brand marks.
 
-## Paper
+The `open_v1` and `open_v1p5` datasets are licensed separately under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Each archive includes the
+full license and attribution information.
 
-**arXiv Paper: Coming soon.** The paper link and arXiv identifier will be added
-here when available. Visit the
-[Project Page](https://hooccee.github.io/LongBanana-v2/) for the benchmark overview.
+## Paper and Citation
 
-## Citation
+**arXiv Paper: Coming soon.** Visit the [Project Page](https://hooccee.github.io/LongBanana-v2/)
+for the research overview. Please cite LongBanana when using the benchmark:
 
 ```bibtex
 @misc{cao2026longbanana,

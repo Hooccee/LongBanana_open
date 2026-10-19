@@ -92,11 +92,6 @@ def _build_base_prompt(task: dict, output_dir: Path, backend: str, timeout_s: in
 
     docs_by_backend = {
         "gemini": PROJECT_ROOT / "docs" / "gemini_image_for_agents.md",
-        "azure": PROJECT_ROOT / "docs" / "gpt_image_1_for_agents.md",
-        "seedream": PROJECT_ROOT / "docs" / "seedream_for_agents.md",
-        "firered": PROJECT_ROOT / "docs" / "firered_image_for_agents.md",
-        "firered-agent": PROJECT_ROOT / "docs" / "firered_agent_image_for_agents.md",
-        "hidream": PROJECT_ROOT / "docs" / "hidream_image_for_agents.md",
     }
     docs_path = docs_by_backend.get(backend)
     docs_block = (
@@ -153,11 +148,6 @@ def _write_openclaw_config(
     # local-service controls so deployment overrides do not silently fall back
     # to the server entry point's compiled default URL.
     for key in (
-        "FIRERED_SERVICE_URL",
-        "FIRERED_AGENT_SERVICE_URL",
-        "HIDREAM_SERVICE_URL",
-        "LOCAL_IMAGE_API_TOKEN",
-        "LOCAL_IMAGE_TIMEOUT_MS",
         "MCP_GENERATED_PREVIEW_MAX_SIDE",
         "MCP_GENERATED_PREVIEW_JPEG_QUALITY",
         "MCP_VIEW_MAX_SIDE",

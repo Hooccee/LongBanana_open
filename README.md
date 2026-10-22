@@ -47,7 +47,7 @@ The taxonomy describes each task's dominant demand. The three grading dimensions
 used across tasks are **Content Fidelity**, **Relational Binding**, and **Global
 Constraint Satisfaction**.
 
-[![LongBanana task and evaluation overview](assets/longbanana-overview.webp)](assets/longbanana-overview.pdf)
+[![LongBanana task overview](assets/fig1_task_overview_cr_2000.webp)](assets/fig1_task_overview_cr_2000.webp)
 
 ## Generation and Evaluation
 
